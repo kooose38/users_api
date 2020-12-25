@@ -33,11 +33,12 @@ module.exports = {
          }
       })
    },
+   //queryより検索表示
    serchUser: (req, res) => {
       const oldquery = req.query.q;
       const query = getAsString(oldquery)
 
-      db.all(`select * from users where name LIKE "%${query}%"`, (eer, rows) => {
+      db.all(`select * from users where name LIKE "%${query}%"`, (err, rows) => {
          if (!err && rows) {
             res.status(200).json(rows);
          } else {

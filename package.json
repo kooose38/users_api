@@ -5,11 +5,15 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.17.1",
+    "mocha": "^8.2.1",
     "sqlite3": "^5.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "power-assert": "^1.6.1",
+    "supertest": "^6.0.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/getUsers.test.js && mocha test/createUser.test.js && mocha test/updatedUser.test.js && mocha test/removeUser.test.js",
     "db": "sqlite3 db.sqlite3",
     "start": "node-dev ./app/index.js"
   },

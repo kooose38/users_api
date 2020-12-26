@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>user list</title>
+</head>
+
+<body>
+   <main>
+      <h1>ユーザーリスト</h1>
+      <label for="search">ユーザー名で検索</label>
+      <input placeholder="検索" type="text" id="search" />
+      <button id="search-btn">検索</button>
+      <a href="./create.html">新規作成</a>
+
+      <table>
+         <thead>
+            <tr>
+               <th>ID</th>
+               <th>username</th>
+               <th>profile</th>
+               <th>date_of_birth</th>
+               <th>created_at</th>
+               <th>updated_at</th>
+               <th>edit page</th>
+               <th>details page</th>
+            </tr>
+         </thead>
+         <tbody id="list">
+
+         </tbody>
+      </table>
+   </main>
+
+   <script src="./js/users.js"></script>
+   <script src="./js/search.js"></script>
+   <script src="./js/index.js"></script>
+
+</body>
+
+</html>

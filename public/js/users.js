@@ -1,6 +1,19 @@
 
 const users = (() => {
    const url = `http://localhost:5001/api/users`;
+   //error or correctData
+   const switchFetchData = (res, messages) => {
+      if (res.status === 200) {
+         alert(messages.message);
+         window.location.href = "/";
+      } else if (
+         res.status === 400 || res.status === 500
+      ) {
+         alert(messages[0].statusCode + ":" + messages[0].message)
+      } else {
+         alert("原因不明エラー")
+      }
+   };
 
 
    return {
@@ -19,6 +32,7 @@ const users = (() => {
                <th>${user.date_of_birth}</th>
                <th>${user.created_at}</th>
                <th>${user.updated_at}</th>
+               <th><a href="/edit.html?id=${user.id}">編集する</a></th>
             </tr>
             `
          })
@@ -44,11 +58,63 @@ const users = (() => {
             body: JSON.stringify(body),
          })
          const messages = await res.json();
+
+         await switchFetchData(res, messages);
+
+      },
+      saveUser: async (id) => {
+         const name = document.getElementById("name").value;
+         const profile = document.getElementById("profile").value;
+         const date_of_birth = document.getElementById("date_of_birth").value;
+
+         const body = {};
+         //reqが存在する分だけ追加
+         if (name !== "" || !name) {
+            body.name = name;
+         }
+         if (profile !== "" || !profile) {
+            body.profile = profile;
+         }
+         if (date_of_birth !== "" || !date_of_birth) {
+            body.date_of_birth = date_of_birth;
+         }
+
+         const res = await fetch(url + "/" + id, {
+            method: "PUT",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body),
+         });
+         const messages = await res.json();
+
+         await switchFetchData(res, messages);
+      },
+      removeUser: async (id) => {
+         if (!window.confirm("削除しますか？")) {
+            return;
+         }
+
+         const res = await fetch(url + "/" + id, {
+            method: "DELETE",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+         })
+         const messages = await res.json();
+
+         await switchFetchData(res, messages);
+      },
+      setUsers: async (id) => {
+         const res = await fetch(url + "/" + id);
+         const user = await res.json();
+
          if (res.status === 200) {
-            alert(messages.message);
-            window.location.href = "/";
+            document.getElementById("name").value = user.name;
+            document.getElementById("profile").value = user.profile;
+            document.getElementById("date_of_birth").value = user.date_of_birth;
          } else {
-            alert(messages[0].message, messages[0].statusCode)
+            alert(user.message)
          }
 
       },

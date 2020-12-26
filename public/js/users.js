@@ -123,6 +123,11 @@ const users = (() => {
          const res = await fetch(`http://localhost:5001/api/following/${id}`);
          const users = await res.json();
 
+         if (res.status !== 200) {
+            alert(users.statusCode + ":" + users.message);
+            return
+         }
+
          const followingList = document.getElementById("following-list")
          let body = "";
 
@@ -139,6 +144,11 @@ const users = (() => {
       getFollowed: async (id) => {
          const res = await fetch(`http://localhost:5001/api/followed/${id}`);
          const users = await res.json();
+
+         if (res.status !== 200) {
+            alert(users.statusCode + ":" + users.message);
+            return
+         }
 
          const followedList = document.getElementById("followed-list")
          let body = "";

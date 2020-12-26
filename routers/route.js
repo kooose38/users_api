@@ -17,5 +17,14 @@ router
    .route("/api/search")
    .get(controller.serchUser)
 
+router
+   .route("/api/following/:id")
+   .get(controller.getFollowing)
+
+
+router
+   .route("/api/followed/:id")
+   .get(controller.getFollowed)
+
 
 module.exports = router;

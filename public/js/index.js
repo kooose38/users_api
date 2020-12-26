@@ -34,6 +34,17 @@
 
          return users.setUsers(id)
 
+
+      case "/detail.html":
+         const uid = window.location.search.split("?id=")[1];
+
+
+         users.getFollowed(uid)
+         users.getFollowing(uid)
+
+         break;
+
+
       default:
          break;
 

@@ -33,6 +33,7 @@ const users = (() => {
                <th>${user.created_at}</th>
                <th>${user.updated_at}</th>
                <th><a href="/edit.html?id=${user.id}">編集する</a></th>
+               <th><a href="/detail.html?id=${user.id}">詳細</a></th>
             </tr>
             `
          })
@@ -117,6 +118,40 @@ const users = (() => {
             alert(user.message)
          }
 
+      },
+      getFollowing: async (id) => {
+         const res = await fetch(`http://localhost:5001/api/following/${id}`);
+         const users = await res.json();
+
+         const followingList = document.getElementById("following-list")
+         let body = "";
+
+         users.forEach(user => {
+            body += `
+         <li>${user.followed_id}</li>
+         <li>${user.name}</li>
+         <li>${user.date_of_birth}</li>
+         <li>${user.profile}</li>
+         `
+         })
+         followingList.insertAdjacentHTML("beforeend", body);
+      },
+      getFollowed: async (id) => {
+         const res = await fetch(`http://localhost:5001/api/followed/${id}`);
+         const users = await res.json();
+
+         const followedList = document.getElementById("followed-list")
+         let body = "";
+
+         users.forEach(user => {
+            body += `
+         <li>${user.following_id}</li>
+         <li>${user.name}</li>
+         <li>${user.date_of_birth}</li>
+         <li>${user.profile}</li>
+         `
+         })
+         followedList.insertAdjacentHTML("beforeend", body);
       },
 
    }

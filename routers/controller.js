@@ -131,5 +131,33 @@ module.exports = {
 
       db.close();
    },
+   //フォローしているユーザー取得
+   getFollowing: async (req, res) => {
+      const id = req.params.id
+      await db.all(
+         `select * from following left join users ON following.followed_id = users.id where following_id = ${id}`
+         , (err, rows) => {
+            if (!err && rows) {
+               res.status(200).json(rows)
+            } else {
+               res.status(400).json([{ message: "存在しません", statuscode: 400 }])
+            }
+         })
+   },
+   //フォローされているユーザー取得
+   getFollowed: async (req, res) => {
+      const id = req.params.id;
+      await db.all(
+         `select * from following left join users ON following.following_id = users.id where followed_id = ${id}`,
+         (err, rows) => {
+            if (!err && rows) {
+               res.status(200).json(rows)
+            } else {
+               res.status(400).json([{ message: "存在しません", statuscode: 400 }])
+            }
+         }
+      )
+   },
 
 }
+

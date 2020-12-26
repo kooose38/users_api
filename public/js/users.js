@@ -2,6 +2,7 @@
 const users = (() => {
    const url = `http://localhost:5001/api/users`;
 
+
    return {
       getUsers: async () => {
 
@@ -23,6 +24,33 @@ const users = (() => {
          })
 
          list.insertAdjacentHTML("beforeend", body);
+      },
+      createUser: async () => {
+         const name = document.getElementById("name").value;
+         const profile = document.getElementById("profile").value;
+         const date_of_birth = document.getElementById("date_of_birth").value;
+
+         const body = {
+            name: name,
+            profile: profile,
+            date_of_birth: date_of_birth,
+         };
+
+         const res = await fetch(url, {
+            method: "POST",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body),
+         })
+         const messages = await res.json();
+         if (res.status === 200) {
+            alert(messages.message);
+            window.location.href = "/";
+         } else {
+            alert(messages[0].message, messages[0].statusCode)
+         }
+
       },
 
    }

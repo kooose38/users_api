@@ -3,12 +3,12 @@ const search = (() => {
 
    return {
       seachUsers: async () => {
-
          const query = document.getElementById("search").value;
          if (query === "") {
             alert("必須項目です。")
             return;
          }
+
          const res = await fetch(url + "?q=" + query);
          const users = await res.json();
 
